@@ -32,13 +32,13 @@ class Heap:
 
     def pop(self, index=0) -> None:
         if self.__type == "min":
-            heapify_node = self.__min_heapify
+            heapify = self.__min_heapify
         elif self.__type == "max":
-            heapify_node = self.__max_heapify
+            heapify = self.__max_heapify
 
         self.__contents[index] = self.__contents[-1]
-        self.__contents.pop(index)
-        heapify_node(self.__contents, 0)
+        self.__contents.pop()
+        heapify(self.__contents, index)
 
     def remove(self, value: Any) -> None:
         if self.__type == "min":
@@ -48,8 +48,8 @@ class Heap:
 
         index = self.__contents.index(value)
         self.__contents[index] = self.__contents[-1]
-        self.__contents.pop(index)
-        heapify(self.__contents, 0)
+        self.__contents.pop()
+        heapify(self.__contents, index)
 
     def peek(self) -> Any:
         return self.__contents[0]
