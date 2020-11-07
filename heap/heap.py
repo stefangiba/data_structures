@@ -17,13 +17,13 @@ class Heap:
     def __str__(self):
         return str(self.__contents)
 
-    def contents(self):
+    def contents(self) -> List[Any]:
         return self.__contents
 
-    def size(self):
+    def size(self) -> int:
         return len(self.__contents)
 
-    def type(self):
+    def type(self) -> str:
         return self.__type
 
     def push(self, value: Any) -> None:
@@ -32,26 +32,13 @@ class Heap:
 
     def pop(self) -> None:
         if self.__type == "min":
-            heapify = self.__min_heapify
+            heapify_node = self.__min_heapify
         elif self.__type == "max":
-            heapify = self.__max_heapify
+            heapify_node = self.__max_heapify
 
         self.__contents[0] = self.__contents[-1]
         self.__contents.pop()
-        heapify(self.__contents, 0)
-
-    def __heapify(self, index) -> None:
-        parent = (index - 1) // 2
-
-        if parent >= 0:
-            if self.__type == "min":
-                if self.__contents[index] < self.__contents[parent]:
-                    self.__contents[index], self.__contents[parent] = self.__contents[parent], self.__contents[index]
-                    self.__heapify(parent)
-            if self.__type == "max":
-                if self.__contents[index] > self.__contents[parent]:
-                    self.__contents[index], self.__contents[parent] = self.__contents[parent], self.__contents[index]
-                    self.__heapify(parent)
+        heapify_node(self.__contents, 0)
 
     def __build_heap(self, array: List[Any]) -> List[Any]:
         if self.__type == "min":
@@ -89,3 +76,16 @@ class Heap:
         if largest != index:
             array[index], array[largest] = array[largest], array[index]
             self.__max_heapify(array, largest)
+
+    def __heapify(self, index) -> None:
+        parent = (index - 1) // 2
+
+        if parent >= 0:
+            if self.__type == "min":
+                if self.__contents[index] < self.__contents[parent]:
+                    self.__contents[index], self.__contents[parent] = self.__contents[parent], self.__contents[index]
+                    self.__heapify(parent)
+            if self.__type == "max":
+                if self.__contents[index] > self.__contents[parent]:
+                    self.__contents[index], self.__contents[parent] = self.__contents[parent], self.__contents[index]
+                    self.__heapify(parent)
