@@ -40,6 +40,9 @@ class Heap:
         self.__contents.pop()
         heapify_node(self.__contents, 0)
 
+    def peek(self) -> Any:
+        return self.__contents[0]
+
     def __build_heap(self, array: List[Any]) -> List[Any]:
         if self.__type == "min":
             heapify = self.__min_heapify
