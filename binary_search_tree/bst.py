@@ -1,8 +1,6 @@
 from collections import deque
 from typing import List, Any
 
-TRAVERSAL_TYPES = ["in_order", "pre_order", "post_order"]
-
 
 class Node:
     def __init__(self, value, left=None, right=None):
@@ -12,6 +10,8 @@ class Node:
 
 
 class BST:
+    __TRAVERSAL_TYPES = ["in_order", "pre_order", "post_order"]
+
     def __init__(self, root: Node = None):
         self.root = root
 
@@ -83,7 +83,7 @@ class BST:
         return output
 
     def depth_first_search(self, traversal="in_order") -> List[Any]:
-        if traversal not in TRAVERSAL_TYPES:
+        if traversal not in self.__TRAVERSAL_TYPES:
             raise Exception("Traversal Error! Available traversals: in_order, pre_order, post_order.")
         if traversal == "in_order":
             return self._depth_first_search_inorder(self.root, [])

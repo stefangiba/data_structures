@@ -3,9 +3,9 @@ from singly_linked_list.singly_linked_list import LinkedList
 
 
 class HashTable:
-    def __init__(self, size):
-        self.__data = [LinkedList() for i in range(size)]
-        self.__size = 0
+    def __init__(self, size: int):
+        self.__data = [None for i in range(size)]
+        self.__length = 0
 
     def __hash(self, key) -> int:
         hashed_value = 0
@@ -19,8 +19,8 @@ class HashTable:
         hashed_key = self.__hash(key)
         if not self.__data[hashed_key]:
             self.__data[hashed_key] = LinkedList()
-        self.__data[hashed_key].append((key, value))
-        self.__size += 1
+        self.__add_to_bucket(self.__data[hashed_key], (key, value))
+        self.__length += 1
 
     def get(self, key) -> Any:
         hashed_key = self.__hash(key)
@@ -34,8 +34,14 @@ class HashTable:
         else:
             raise KeyError(key)
 
+    def contains_key(self, key) -> bool:
+        return key in self.keys()
+
+    def contains_value(self, value) -> bool:
+        return value in self.values()
+
     def keys(self):
-        if self.__size == 0:
+        if self.__length == 0:
             return []
         keys = []
         for bucket in self.__data:
@@ -44,7 +50,7 @@ class HashTable:
         return keys
 
     def values(self):
-        if self.__size == 0:
+        if self.__length == 0:
             return []
         values = []
         for bucket in self.__data:
@@ -70,3 +76,23 @@ class HashTable:
                 output.append(current.value[1])
             current = current.next
         return output
+
+    def __bucket_contains(self, bucket: LinkedList, item: tuple):
+        current = bucket.get_head()
+        while current:
+            if current.value[0] == item[0]:
+                return True
+            current = current.next
+
+        return False
+
+    def __add_to_bucket(self, bucket: LinkedList, item: tuple) -> None:
+        if not self.__bucket_contains(bucket, item):
+            bucket.append(item)
+        else:
+            current = bucket.get_head()
+            while current:
+                if current.value[0] == item[0]:
+                    bucket.remove_value(current.value)
+                current = current.next
+            bucket.append(item)

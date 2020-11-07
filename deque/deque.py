@@ -19,7 +19,7 @@ class Deque:
         self.__contents.append_left(value)
 
     def extend(self, iterable) -> None:
-        if isinstance(iterable, list) or isinstance(iterable, tuple):
+        if isinstance(iterable, list) or isinstance(iterable, tuple) or isinstance(iterable, set):
             for item in iterable:
                 self.__contents.append(item)
         elif isinstance(iterable, dict):
@@ -29,6 +29,9 @@ class Deque:
     def extend_left(self, iterable) -> None:
         if isinstance(iterable, list) or isinstance(iterable, tuple):
             for item in reversed(iterable):
+                self.__contents.append_left(item)
+        elif isinstance(iterable, set):
+            for item in iterable:
                 self.__contents.append_left(item)
         elif isinstance(iterable, dict):
             for key in reversed(iterable):

@@ -15,7 +15,7 @@ class Heap:
             self.__contents = self.__build_heap(array)
 
     def __str__(self):
-        return str(self.__contents)
+        return self.type() + ": " + str(self.__contents)
 
     def contents(self) -> List[Any]:
         return self.__contents
@@ -24,7 +24,7 @@ class Heap:
         return len(self.__contents)
 
     def type(self) -> str:
-        return self.__type
+        return self.__type.capitalize() + " Heap"
 
     def push(self, value: Any) -> None:
         self.__contents.append(value)

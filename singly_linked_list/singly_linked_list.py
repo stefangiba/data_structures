@@ -44,6 +44,9 @@ class LinkedList:
             current = current.next
         return False
 
+    def is_empty(self) -> bool:
+        return self.__length == 0
+
     def pop(self) -> Any:
         return self.remove_at_index(self.__length - 1)
 
@@ -107,10 +110,10 @@ class LinkedList:
     def remove_value(self, value) -> Node:
         if self.__head.value == value:
             removed = self.remove_at_index(index=0)
-            return removed.value
+            return removed
         if self.__tail.value == value:
             removed = self.remove_at_index(index=self.__length-1)
-            return removed.value
+            return removed
 
         current = self.__head
         while current:
